@@ -1,17 +1,18 @@
 async function getNews() {
-  // 改用相对路径
-  const res = await fetch('/api/news') 
-  // 或者直接读取本地数据（推荐用于静态生成）
-  // import newsData from '@/data/news.json'
+  // 动态判断环境
+  const baseUrl = process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:3000' 
+    : 'https://news.ok9981.com'
+
+  const res = await fetch(`${baseUrl}/api/news`)
   return res.json()
 }
 export default async function Home() {
+  const news = await getNews()
   // 生产环境禁用服务端数据获取
   if (process.env.NODE_ENV === 'production') {
     return <div>Loading...</div>
   }
-  
-  const news = await getNews()
 
   return (
     <main className="min-h-screen p-8">
