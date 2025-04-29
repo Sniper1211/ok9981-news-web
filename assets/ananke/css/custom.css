@@ -1,0 +1,11 @@
+.news-list {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.article-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+@media (max-width: 600px) {
+  .news-list { padding: 1rem; }
+}

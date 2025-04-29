@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ .Title }}</title>
+</head>
+<body>
+  <main>
+    {{ range .Paginator.Pages }}
+      <article>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <time>{{ .Date.Format "2006-01-02" }}</time>
+        <p>{{ .Summary }}</p>
+      </article>
+    {{ end }}
+    {{ template "_internal/pagination.html" . }}
+  </main>
+</body>
+</html>

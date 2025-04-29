@@ -1,0 +1,13 @@
+<section class="news-list ph3 ph5-l">
+  <div class="grid gap-4 mt4">
+    {{ range .Paginator.Pages }}
+      <article class="article-card bg-white br3 shadow-3 hover-shadow-5">
+        <div class="article-content pa3">
+          <h3 class="f4">{{ .Title }}</h3>
+          <time class="f6 silver">{{ .Date.Format "2006-01-02" }}</time>
+          <p class="lh-copy">{{ .Summary }}</p>
+        </div>
+      </article>
+    {{ end }}
+  </div>
+</section>

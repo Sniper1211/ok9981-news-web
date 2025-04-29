@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="mw8 center ph3 pv4">
+  <article class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray">
+    <header class="news-header">
+      <time class="f6 db gray">{{ .Date.Format "2006-01-02" }}</time>
+      <h1 class="f1 mt3">{{ .Title }}</h1>
+    </header>
+    <div class="nested-copy-line-height lh-copy f4 nested-links nested-img mid-gray markdown-content">
+      {{ .Content | safeHTML }}
+    </div>
+  </article>
+</div>
+{{ end }}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>新闻中心 on 每日新闻简报</title>
+    <link>http://localhost:1313/news/</link>
+    <description>Recent content in 新闻中心 on 每日新闻简报</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 15 Apr 2025 09:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/news/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>每日新闻简报</title>
+      <link>http://localhost:1313/news/2024-06-15-daily-news/</link>
+      <pubDate>Tue, 15 Apr 2025 09:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/news/2024-06-15-daily-news/</guid>
+      <description>&lt;h2 id=&#34;今日要闻&#34;&gt;今日要闻&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;重大政策调整：国务院发布新经济刺激方案&lt;/li&gt;&#xA;&lt;li&gt;科技前沿：我国成功发射新一代通信卫星&lt;/li&gt;&#xA;&lt;li&gt;社会民生：全国多地提高最低工资标准&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

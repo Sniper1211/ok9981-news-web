@@ -1,0 +1,7 @@
+baseURL = 'http://localhost:1313/'
+languageCode = 'zh-cn'
+title = '每日新闻简报'
+theme = 'ananke'
+[pagination]
+  pagerSize = 5  # 更新分页配置
+enableRobotsTXT = true  # 启用SEO设置

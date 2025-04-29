@@ -1,0 +1,16 @@
+baseURL = 'http://example.org/'
+languageCode = 'zh-cn'
+title = '新闻网站'
+
+[params]
+body_classes = "sans-serif bg-light-gray"
+post_content_classes = "sans-serif"
+custom_css = ["custom.css"]
+
+[services]
+  [services.disqus]
+  shortname = 'your-disqus-shortname'
+
+[module]
+  [[module.imports]]
+    path = "github.com/theNewDynamic/gohugo-theme-ananke"
