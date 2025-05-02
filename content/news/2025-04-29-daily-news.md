@@ -4,6 +4,7 @@ date = 2025-04-15T09:00:00+08:00
 draft = false
 categories = ['news']
 type = 'news' 
+summary = "“五一”假期全国大部适宜外出，北方地区多冷空气，后期江南华南降雨明显；"
 +++
 
 ## 今日要闻
