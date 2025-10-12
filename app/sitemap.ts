@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: `${base}/`, lastModified: new Date() },
-    { url: `${base}/news`, lastModified: new Date() },
     ...news,
   ];
 }
