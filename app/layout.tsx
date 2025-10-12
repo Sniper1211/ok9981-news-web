@@ -24,10 +24,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+        <header style={{
+          position: "sticky",
+          top: 0,
+          backdropFilter: "saturate(180%) blur(6px)",
+          background: "color-mix(in oklab, var(--background) 85%, transparent)",
+          borderBottom: "1px solid var(--border)",
+          zIndex: 50,
+        }}>
+          <div className="site-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.8rem 0" }}>
+            <a href="/" style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--foreground)" }}>OK9981 新闻中心</a>
+            <nav style={{ display: "flex", gap: "1rem" }}>
+              <a href="/" aria-label="首页">首页</a>
+              <a href="/news" aria-label="新闻">新闻</a>
+            </nav>
+          </div>
+        </header>
         {children}
+        <footer style={{ borderTop: "1px solid var(--border)", marginTop: "3rem" }}>
+          <div className="site-container" style={{ padding: "1.2rem 0", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.9rem", color: "var(--muted)" }}>
+            <span>© {new Date().getFullYear()} OK9981</span>
+            <span>由 Next.js 与 Vercel 驱动</span>
+          </div>
+        </footer>
       </body>
     </html>
   );
