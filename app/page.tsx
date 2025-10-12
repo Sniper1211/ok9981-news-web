@@ -4,6 +4,14 @@ import { getAllNews } from "@/lib/news";
 export const metadata = {
   title: "新闻中心",
   description: "最新新闻列表",
+  keywords: [
+    "OK9981",
+    "新闻",
+    "资讯",
+    "每日资讯",
+    "新闻中心",
+    "首页",
+  ],
 };
 
 export default function Home() {
