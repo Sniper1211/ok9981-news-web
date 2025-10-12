@@ -1,30 +1,61 @@
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { remark } from "remark";
+import html from "remark-html";
+
 export type NewsItem = {
   slug: string;
   title: string;
   date: string; // ISO string
   summary: string;
-  content: string;
 };
 
-export const newsItems: NewsItem[] = [
-  {
-    slug: "2025-04-29-daily-news",
-    title: "【每日资讯简报】4月29日 周二",
-    date: "2025-04-15T09:00:00+08:00",
-    summary:
-      "“五一”假期全国大部适宜外出，北方地区多冷空气，后期江南华南降雨明显；",
-    content:
-      "【每日资讯简报，一分钟知天下事】早上好！2025年4月29日 星期二 农历四月初二\n1、“五一”假期全国大部适宜外出，北方地区多冷空气，后期江南华南降雨明显；\n2、4月30日9-11时，将迎来本年度首个“蛇年蛇月蛇日蛇时”；\n3、发改委：将建立实施育儿补贴制度；指导限购城市定向增发购车指标；\n4、工信部：加快自动驾驶系统安全要求强制性国家标准研制；\n5、网警：“银狐”木马病毒来袭，文件名称与“所得税”“放假安排”等诱饵主题相关；\n6、上海6月起施行灵活就业人员公积金新政：不限户籍、提取自由，最低月缴存270元；",
-  },
-];
+const CONTENT_DIR = path.join(process.cwd(), "content", "news");
 
-export function getAllNews() {
-  // sort by date desc
-  return [...newsItems].sort(
+export function getNewsSlugs(): string[] {
+  if (!fs.existsSync(CONTENT_DIR)) return [];
+  return fs
+    .readdirSync(CONTENT_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => f.replace(/\.md$/, ""));
+}
+
+export function getAllNews(): NewsItem[] {
+  const slugs = getNewsSlugs();
+  const items = slugs.map((slug) => {
+    const file = fs.readFileSync(path.join(CONTENT_DIR, `${slug}.md`), "utf8");
+    const { data, content } = matter(file);
+    const title = String(data.title ?? slug);
+    const date = String(data.date ?? new Date().toISOString());
+    const summary = String(
+      data.summary ?? content.split("\n").find((l) => l.trim().length > 0) ?? ""
+    );
+    return { slug, title, date, summary };
+  });
+  return items.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 }
 
-export function getNewsBySlug(slug: string) {
-  return newsItems.find((n) => n.slug === slug) || null;
+export function getNewsBySlug(slug: string): NewsItem | null {
+  const filePath = path.join(CONTENT_DIR, `${slug}.md`);
+  if (!fs.existsSync(filePath)) return null;
+  const { data, content } = matter(fs.readFileSync(filePath, "utf8"));
+  return {
+    slug,
+    title: String(data.title ?? slug),
+    date: String(data.date ?? new Date().toISOString()),
+    summary: String(
+      data.summary ?? content.split("\n").find((l) => l.trim().length > 0) ?? ""
+    ),
+  };
+}
+
+export async function getNewsHtmlBySlug(slug: string): Promise<string | null> {
+  const filePath = path.join(CONTENT_DIR, `${slug}.md`);
+  if (!fs.existsSync(filePath)) return null;
+  const { content } = matter(fs.readFileSync(filePath, "utf8"));
+  const rendered = await remark().use(html).process(content);
+  return String(rendered.value);
 }
