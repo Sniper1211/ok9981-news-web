@@ -74,3 +74,14 @@ export async function getNewsHtmlBySlug(slug: string): Promise<string | null> {
   const rendered = await remark().use(html).process(content);
   return String(rendered.value);
 }
+
+export function getSiblingNews(slug: string): { prev: NewsItem | null; next: NewsItem | null } {
+  const items = getAllNews();
+  const index = items.findIndex((i) => i.slug === slug);
+  if (index === -1) return { prev: null, next: null };
+  // 列表按时间倒序（新→旧）。约定：
+  // 上一篇 = 更旧（index + 1），下一篇 = 更新（index - 1）。
+  const prev = items[index + 1] ?? null; // older
+  const next = items[index - 1] ?? null; // newer
+  return { prev, next };
+}

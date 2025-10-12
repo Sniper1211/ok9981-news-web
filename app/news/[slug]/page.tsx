@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllNews, getNewsBySlug, getNewsHtmlBySlug } from "@/lib/news";
+import { getAllNews, getNewsBySlug, getNewsHtmlBySlug, getSiblingNews } from "@/lib/news";
 
 type Props = { params: { slug: string } };
 
@@ -28,6 +28,7 @@ export default async function NewsDetailPage({ params }: Props) {
   const item = getNewsBySlug(params.slug);
   if (!item) return notFound();
   const html = await getNewsHtmlBySlug(params.slug);
+  const { prev, next } = getSiblingNews(params.slug);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
@@ -38,6 +39,33 @@ export default async function NewsDetailPage({ params }: Props) {
         <h1 className="text-3xl font-bold mt-2">{item.title}</h1>
       </header>
       <article className="prose mt-6" dangerouslySetInnerHTML={{ __html: html ?? "" }} />
+
+      <nav aria-label="文章导航" className="mt-10">
+        <div className="flex items-center justify-between gap-4">
+          {prev ? (
+            <a href={`/news/${prev.slug}`} className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800">
+              <span aria-hidden>←</span>
+              <span>
+                上一篇
+                <span className="ml-2 text-slate-600">{prev.title}</span>
+              </span>
+            </a>
+          ) : (
+            <span className="text-slate-500">已是最早一篇</span>
+          )}
+          {next ? (
+            <a href={`/news/${next.slug}`} className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800">
+              <span>
+                下一篇
+                <span className="ml-2 text-slate-600">{next.title}</span>
+              </span>
+              <span aria-hidden>→</span>
+            </a>
+          ) : (
+            <span className="text-slate-500">已是最新一篇</span>
+          )}
+        </div>
+      </nav>
     </main>
   );
 }

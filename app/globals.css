@@ -25,6 +25,22 @@
   }
 }
 
+/* data-theme 强制覆盖，放在媒体查询后以保证优先级 */
+html[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #171717;
+  --accent: #2563eb;
+  --muted: #6b7280;
+  --border: rgba(0,0,0,0.08);
+}
+html[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --accent: #60a5fa;
+  --muted: #9ca3af;
+  --border: rgba(255,255,255,0.145);
+}
+
 * {
   box-sizing: border-box;
 }

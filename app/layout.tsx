@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,9 +36,10 @@ export default function RootLayout({
         }}>
           <div className="site-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.8rem 0" }}>
             <a href="/" style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--foreground)" }}>OK9981 新闻中心</a>
-            <nav style={{ display: "flex", gap: "1rem" }}>
+            <nav style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
               <a href="/" aria-label="首页">首页</a>
               <a href="/news" aria-label="新闻">新闻</a>
+              <ThemeToggle />
             </nav>
           </div>
         </header>
