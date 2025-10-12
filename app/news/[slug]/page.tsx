@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllNews, getNewsBySlug, getNewsHtmlBySlug, getSiblingNews } from "@/lib/news";
 
-type Props = { params: { slug: string } };
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   return getAllNews().map((n) => ({ slug: n.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const item = getNewsBySlug(params.slug);
+  const { slug } = await params;
+  const item = getNewsBySlug(slug);
   if (!item) return {};
   return {
     title: item.title,
@@ -25,10 +26,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function NewsDetailPage({ params }: Props) {
-  const item = getNewsBySlug(params.slug);
+  const { slug } = await params;
+  const item = getNewsBySlug(slug);
   if (!item) return notFound();
-  const html = await getNewsHtmlBySlug(params.slug);
-  const { prev, next } = getSiblingNews(params.slug);
+  const html = await getNewsHtmlBySlug(slug);
+  const { prev, next } = getSiblingNews(slug);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
