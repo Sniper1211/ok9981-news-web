@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllNews, getNewsBySlug } from "@/lib/news";
+import { getAllNews, getNewsBySlug, getNewsHtmlBySlug } from "@/lib/news";
 
 type Props = { params: { slug: string } };
 
@@ -24,9 +24,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function NewsDetailPage({ params }: Props) {
+export default async function NewsDetailPage({ params }: Props) {
   const item = getNewsBySlug(params.slug);
   if (!item) return notFound();
+  const html = await getNewsHtmlBySlug(params.slug);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8">
@@ -36,11 +37,7 @@ export default function NewsDetailPage({ params }: Props) {
         </time>
         <h1 className="text-3xl font-bold mt-2">{item.title}</h1>
       </header>
-      <article className="prose prose-slate mt-6">
-        {item.content.split("\n").map((line, idx) => (
-          <p key={idx}>{line}</p>
-        ))}
-      </article>
+      <article className="prose prose-slate mt-6" dangerouslySetInnerHTML={{ __html: html ?? "" }} />
     </main>
   );
 }
