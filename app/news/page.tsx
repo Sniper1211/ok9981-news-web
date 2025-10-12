@@ -2,8 +2,16 @@ import Link from "next/link";
 import { getAllNews } from "@/lib/news";
 
 export const metadata = {
-  title: "新闻中心",
+  title: "每日新闻资讯中心",
   description: "最新新闻列表",
+  keywords: [
+    "OK9981",
+    "新闻",
+    "资讯",
+    "每日资讯",
+    "新闻中心",
+    "新闻列表",
+  ],
 };
 
 export default function NewsListPage() {
