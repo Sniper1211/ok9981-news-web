@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent: #2563eb; /* blue-600 */
+  --muted: #6b7280; /* slate-500 */
+  --border: rgba(0,0,0,0.08);
 }
 
 @theme inline {
@@ -16,11 +19,123 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --accent: #60a5fa; /* blue-400 */
+    --muted: #9ca3af; /* slate-400 */
+    --border: rgba(255,255,255,0.145);
   }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Basic container utility */
+.site-container {
+  max-width: 72rem; /* 1152px ~ max-w-5xl/6xl 范围 */
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Article typography (lightweight替代typography插件) */
+.prose {
+  font-size: 1.0625rem; /* ~17px */
+  color: var(--foreground);
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  line-height: 1.25;
+  font-weight: 700;
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+}
+.prose h1 { font-size: 2rem; }
+.prose h2 { font-size: 1.5rem; }
+.prose h3 { font-size: 1.25rem; }
+.prose p {
+  margin: 0.9em 0;
+}
+.prose a {
+  color: var(--accent);
+}
+.prose ul, .prose ol {
+  margin: 0.8em 0;
+  padding-left: 1.25em;
+}
+.prose li { margin: 0.4em 0; }
+.prose blockquote {
+  margin: 1.2em 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+  background: rgba(0,0,0,0.03);
+}
+.prose pre {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95rem;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+}
+.prose code {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.1rem 0.35rem;
+}
+.prose img, .prose video {
+  max-width: 100%;
+  border-radius: 8px;
+}
+.prose hr {
+  height: 1px;
+  border: none;
+  background: var(--border);
+  margin: 2rem 0;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2em 0;
+}
+.prose th, .prose td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+}
+.prose thead th {
+  background: rgba(0,0,0,0.04);
+}
+
+/* Card surface */
+.card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.card:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
 }

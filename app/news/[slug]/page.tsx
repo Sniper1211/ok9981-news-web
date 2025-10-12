@@ -30,14 +30,14 @@ export default async function NewsDetailPage({ params }: Props) {
   const html = await getNewsHtmlBySlug(params.slug);
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
+    <main className="mx-auto max-w-3xl px-4 py-10">
       <header>
         <time className="block text-sm text-slate-500">
           {new Date(item.date).toLocaleDateString("zh-CN")}
         </time>
         <h1 className="text-3xl font-bold mt-2">{item.title}</h1>
       </header>
-      <article className="prose prose-slate mt-6" dangerouslySetInnerHTML={{ __html: html ?? "" }} />
+      <article className="prose mt-6" dangerouslySetInnerHTML={{ __html: html ?? "" }} />
     </main>
   );
 }
