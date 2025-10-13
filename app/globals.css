@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --accent: #2563eb; /* blue-600 */
-  --muted: #6b7280; /* slate-500 */
-  --border: rgba(0,0,0,0.08);
+  /* Light (day) theme v4: softer background, calmer accents */
+  --background: #e2e8f0; /* slate-200 */
+  --foreground: #0f172a; /* slate-900 */
+  --accent: #1e40af; /* blue-800 */
+  --muted: #64748b; /* slate-500 */
+  --border: rgba(0,0,0,0.14);
+  --footer-height: 64px;
 }
 
 @theme inline {
@@ -17,28 +19,29 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --accent: #60a5fa; /* blue-400 */
-    --muted: #9ca3af; /* slate-400 */
-    --border: rgba(255,255,255,0.145);
+    /* 夜间配色 v2：再提亮背景，提升文字对比 */
+    --background: #1f2937; /* slate-800 */
+    --foreground: #f1f5f9; /* slate-100 */
+    --accent: #93c5fd; /* 蓝色更醒目 */
+    --muted: #e5e7eb; /* slate-200 */
+    --border: rgba(255,255,255,0.28);
   }
 }
 
 /* data-theme 强制覆盖，放在媒体查询后以保证优先级 */
 html[data-theme="light"] {
-  --background: #ffffff;
-  --foreground: #171717;
-  --accent: #2563eb;
-  --muted: #6b7280;
-  --border: rgba(0,0,0,0.08);
+  --background: #e2e8f0;
+  --foreground: #0f172a;
+  --accent: #1e40af;
+  --muted: #64748b;
+  --border: rgba(0,0,0,0.14);
 }
 html[data-theme="dark"] {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --accent: #60a5fa;
-  --muted: #9ca3af;
-  --border: rgba(255,255,255,0.145);
+  --background: #1f2937;
+  --foreground: #f1f5f9;
+  --accent: #93c5fd;
+  --muted: #e5e7eb;
+  --border: rgba(255,255,255,0.28);
 }
 
 * {
@@ -47,6 +50,7 @@ html[data-theme="dark"] {
 
 html, body {
   height: 100%;
+  margin: 0; /* reset default browser margin to avoid bottom gap */
 }
 
 body {
@@ -56,6 +60,7 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-bottom: var(--footer-height);
 }
 
 a {
