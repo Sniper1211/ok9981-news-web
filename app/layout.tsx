@@ -32,7 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
+        style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
+      >
         <header style={{
           position: "sticky",
           top: 0,
@@ -51,7 +55,7 @@ export default function RootLayout({
           </div>
         </header>
         {children}
-        <footer style={{ borderTop: "1px solid var(--border)", marginTop: "3rem" }}>
+        <footer style={{ position: "fixed", left: 0, right: 0, bottom: 0, borderTop: "1px solid var(--border)", background: "var(--background)", zIndex: 40 }}>
           <div className="site-container" style={{ padding: "1.2rem 0", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.9rem", color: "var(--muted)" }}>
             <span>© {new Date().getFullYear()} OK9981</span>
             <span>由 Next.js 与 Vercel 驱动</span>
