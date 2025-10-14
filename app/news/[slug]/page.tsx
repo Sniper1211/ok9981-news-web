@@ -69,6 +69,8 @@ export default async function NewsDetailPage({ params }: Props) {
           )}
         </div>
       </nav>
+      {/* 为固定 footer 预留额外空间，避免导航被遮挡 */}
+      <div aria-hidden style={{ height: "calc(var(--footer-height) + 16px)" }} />
     </main>
   );
 }
