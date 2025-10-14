@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
+import FooterPadding from "@/components/FooterPadding";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,12 +56,14 @@ export default function RootLayout({
           </div>
         </header>
         {children}
-        <footer style={{ position: "fixed", left: 0, right: 0, bottom: 0, borderTop: "1px solid var(--border)", background: "var(--background)", zIndex: 40 }}>
+        <footer id="site-footer" style={{ position: "fixed", left: 0, right: 0, bottom: 0, borderTop: "1px solid var(--border)", background: "var(--background)", zIndex: 40 }}>
           <div className="site-container" style={{ padding: "1.2rem 0", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.9rem", color: "var(--muted)" }}>
             <span>© {new Date().getFullYear()} OK9981</span>
             <span>由 Next.js 与 Vercel 驱动</span>
           </div>
         </footer>
+        {/* 动态为 body 留出与 footer 等高的空间，避免遮挡 */}
+        <FooterPadding />
       </body>
     </html>
   );
