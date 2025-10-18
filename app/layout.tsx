@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
 import FooterPadding from "@/components/FooterPadding";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,15 @@ export default function RootLayout({
         suppressHydrationWarning
         style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
       >
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-K4ZX54PHWM" strategy="afterInteractive" />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-K4ZX54PHWM');
+          `}
+        </Script>
         <header style={{
           position: "sticky",
           top: 0,
