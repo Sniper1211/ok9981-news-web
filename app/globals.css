@@ -83,6 +83,7 @@ a:hover {
 .prose {
   font-size: 1.0625rem; /* ~17px */
   color: var(--foreground);
+  line-height: 1.85;
 }
 .prose h1, .prose h2, .prose h3, .prose h4 {
   line-height: 1.25;
@@ -111,7 +112,7 @@ a:hover {
   list-style-type: disc;
   list-style-position: outside;
 }
-.prose li { margin: 0.4em 0; }
+.prose li { margin: 0.6em 0; }
 .prose blockquote {
   margin: 1.2em 0;
   padding: 0.5em 1em;
