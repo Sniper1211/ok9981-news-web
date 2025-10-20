@@ -37,9 +37,9 @@ export default function NewsListPage() {
             <time className="block text-sm text-slate-500 mt-1">
               {new Date(item.date).toLocaleDateString("zh-CN")}
             </time>
-            <p className="mt-2 line-clamp-3 text-sm text-slate-700">{item.summary}</p>
+            <p className="mt-2 line-clamp-3 text-sm">{item.summary}</p>
             <div className="mt-4">
-              <span className="inline-flex items-center gap-1 text-blue-600 group-hover:text-blue-800">
+              <span className="card-cta inline-flex items-center gap-1">
                 阅读全文 <span aria-hidden>→</span>
               </span>
             </div>
