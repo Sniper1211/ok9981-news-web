@@ -161,11 +161,27 @@ a:hover {
 
 /* Card surface */
 .card {
-  background: var(--background);
+  background: color-mix(in oklab, var(--background) 92%, white);
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
-.card:hover {
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+.card:hover,
+.card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+/* Card CTA text (阅读全文) softer accent across themes */
+.card-cta {
+  color: color-mix(in oklab, var(--accent) 72%, var(--foreground));
+  transition: color 160ms ease;
+}
+.card:hover .card-cta,
+.card:focus-within .card-cta {
+  color: color-mix(in oklab, var(--accent) 84%, var(--foreground));
+}
+.card-cta [aria-hidden] {
+  opacity: 0.85;
 }
