@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import breaks from "remark-breaks";
 import * as toml from "toml";
 
 export type NewsItem = {
@@ -71,7 +72,7 @@ export async function getNewsHtmlBySlug(slug: string): Promise<string | null> {
   const filePath = path.join(CONTENT_DIR, `${slug}.md`);
   if (!fs.existsSync(filePath)) return null;
   const { content } = parseFrontMatter(fs.readFileSync(filePath, "utf8"));
-  const rendered = await remark().use(html).process(content);
+  const rendered = await remark().use(breaks as any).use(html).process(content);
   return String(rendered.value);
 }
 
