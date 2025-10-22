@@ -139,7 +139,7 @@ export default function ThemeToggle() {
                   justifyContent: "center",
                   position: "absolute",
                   top: 0,
-                  left: 2,
+                  left: 1,
                   transform: isDarkEffective ? "translateX(28px)" : "translateX(-1px)",
                   transition: "transform 200ms ease",
                   boxShadow: "0 1px 6px rgba(0,0,0,0.15)",
