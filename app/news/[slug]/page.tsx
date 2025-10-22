@@ -32,9 +32,17 @@ export default async function NewsDetailPage({ params }: Props) {
   if (!item) return notFound();
   const html = await getNewsHtmlBySlug(slug);
   const { prev, next } = getSiblingNews(slug);
+  const d = new Date(item.date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
+      <nav aria-label="面包屑" className="text-sm text-slate-600 mb-4 flex items-center gap-2">
+        <a href="/news">新闻列表</a>
+        <span aria-hidden>›</span>
+        <a href={`/news/archive/${year}/${month}`}>{year}-{month} 归档</a>
+      </nav>
       <header>
         <time className="block text-sm text-slate-500">
           {new Date(item.date).toLocaleDateString("zh-CN")}

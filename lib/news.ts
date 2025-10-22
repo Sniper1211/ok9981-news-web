@@ -86,3 +86,63 @@ export function getSiblingNews(slug: string): { prev: NewsItem | null; next: New
   const next = items[index - 1] ?? null; // newer
   return { prev, next };
 }
+
+export const PAGE_SIZE = 20;
+
+export function getAllYears(): number[] {
+  const years = new Set<number>();
+  for (const n of getAllNews()) {
+    const d = new Date(n.date);
+    years.add(d.getFullYear());
+  }
+  return Array.from(years).sort((a, b) => b - a);
+}
+
+export function getMonthsByYear(year: number): number[] {
+  const months = new Set<number>();
+  for (const n of getAllNews()) {
+    const d = new Date(n.date);
+    if (d.getFullYear() === year) months.add(d.getMonth() + 1);
+  }
+  return Array.from(months).sort((a, b) => b - a);
+}
+
+export function getNewsByYearMonth(year: number, month: number): NewsItem[] {
+  return getAllNews().filter((n) => {
+    const d = new Date(n.date);
+    return d.getFullYear() === year && d.getMonth() + 1 === month;
+  });
+}
+
+export function getPaginatedNewsPage(page: number, pageSize: number = PAGE_SIZE): { items: NewsItem[]; totalPages: number; page: number } {
+  const all = getAllNews();
+  const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
+  const safePage = Math.min(Math.max(1, page), totalPages);
+  const start = (safePage - 1) * pageSize;
+  const items = all.slice(start, start + pageSize);
+  return { items, totalPages, page: safePage };
+}
+
+export function getYearMonthFromItem(n: NewsItem): { year: number; month: number } {
+  const d = new Date(n.date);
+  return { year: d.getFullYear(), month: d.getMonth() + 1 };
+}
+
+export type NewsWithContent = NewsItem & { content: string };
+
+export function getAllNewsWithContent(): NewsWithContent[] {
+  const slugs = getNewsSlugs();
+  const items = slugs.map((slug) => {
+    const file = fs.readFileSync(path.join(CONTENT_DIR, `${slug}.md`), "utf8");
+    const { data, content } = parseFrontMatter(file);
+    const title = String(data.title ?? slug);
+    const date = String(data.date ?? new Date().toISOString());
+    const summary = String(
+      data.summary ?? content.split("\n").find((l) => l.trim().length > 0) ?? ""
+    );
+    return { slug, title, date, summary, content };
+  });
+  return items.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+}
