@@ -61,6 +61,7 @@ export default function RootLayout({
             <nav style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
               <a href="/" aria-label="首页">首页</a>
               <a href="/news" aria-label="新闻">新闻</a>
+              <a href="/search" aria-label="搜索">搜索</a>
               <ThemeToggle />
             </nav>
           </div>
