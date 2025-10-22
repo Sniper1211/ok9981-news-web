@@ -1,5 +1,5 @@
 ---
-title: "【每日资讯简报】 2025年10月22日 星期三"
+title: "【每日资讯简报】 2025年10月22日 周三"
 date: "2025-10-22"
 draft: false
 categories: ["news"]

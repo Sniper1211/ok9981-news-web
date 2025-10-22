@@ -142,7 +142,7 @@ export default function ThemeToggle() {
                   left: 2,
                   transform: isDarkEffective ? "translateX(28px)" : "translateX(-1px)",
                   transition: "transform 200ms ease",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                  boxShadow: "0 1px 6px rgba(0,0,0,0.15)",
                   fontSize: 16,
                   lineHeight: 1,
                 }}
