@@ -28,14 +28,18 @@ export default function ThemeToggle() {
     const saved = (window.localStorage.getItem("theme") as Theme | null) || "system";
     setTheme(saved);
     applyTheme(saved);
+  }, []);
 
+  // 监听系统主题变化，仅当当前处于“跟随系统”时才应用
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = () => {
-      if (saved === "system") applyTheme("system");
+      if (theme === "system") applyTheme("system");
     };
     mql.addEventListener("change", onChange);
     return () => mql.removeEventListener("change", onChange);
-  }, []);
+  }, [theme]);
 
   // 测量“🖥 跟随系统”文本对应的按钮理想宽度，用于固定按钮与菜单宽度
   useEffect(() => {
@@ -94,122 +98,61 @@ export default function ThemeToggle() {
       suppressHydrationWarning
       style={{ position: "relative", display: "inline-block" }}
     >
-      <button
-        type="button"
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-        style={{
-          border: "1px solid var(--border)",
-          borderRadius: 9999,
-          padding: "6px 10px",
-          background: "var(--background)",
-          color: "var(--foreground)",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 8,
-          width: buttonWidth ?? 160,
-        }}
-      >
-        <span style={{
-          flex: 1,
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-        }}>{currentLabel}</span>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden
-          style={{ opacity: 0.7 }}
-        >
-          <path
-            d="M7 10l5 5 5-5"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-
-      {open && (
-        <div
-          role="menu"
-          style={{
-            position: "absolute",
-            top: "calc(100% + 6px)",
-            left: 0,
-            minWidth: buttonWidth ? `${buttonWidth}px` : "100%",
-            background: "var(--background)",
-            color: "var(--foreground)",
-            border: "1px solid var(--border)",
-            borderRadius: 10,
-            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-            zIndex: 1000,
-            overflow: "hidden",
-          }}
-        >
-          {options.map((opt) => (
+      {mounted && (
+        (() => {
+          const systemPrefersDark = typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const isDarkEffective = theme === "dark" || (theme === "system" && systemPrefersDark);
+          return (
             <button
-              key={opt.value}
-              role="menuitemradio"
-              aria-checked={theme === opt.value}
-              onClick={() => { setTheme(opt.value); setOpen(false); }}
+              type="button"
+              role="switch"
+              aria-checked={isDarkEffective}
+              aria-label="切换主题：日间/夜间（默认跟随系统）"
+              onClick={() => {
+                const isDark = theme === "dark" || (theme === "system" && systemPrefersDark);
+                setTheme(isDark ? "light" : "dark");
+              }}
               style={{
-                display: "flex",
-                width: "100%",
-                alignItems: "center",
-                gap: 8,
-                padding: "10px 12px",
-                background: "transparent",
-                color: "var(--foreground)",
-                border: "none",
-                cursor: "pointer",
+                // 轨道（与圆球等高）
+                width: 60,
+                height: 30,
+                borderRadius: 9999,
+                border: "1px solid var(--border)",
+                background: "var(--muted)",
+                position: "relative",
+                display: "inline-block",
+                padding: 0,
+                transition: "background-color 200ms ease, border-color 200ms ease",
               }}
             >
-              <span style={{ flex: 1, textAlign: "left" }}>{opt.label}</span>
-              {theme === opt.value && (
-                <span aria-hidden style={{ opacity: 0.7 }}>✓</span>
-              )}
+              {/* 圆球滑块（与轨道等高，水平居中对齐）*/}
+              <span
+                aria-hidden
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  background: "var(--background)",
+                  color: "var(--foreground)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "absolute",
+                  top: 0,
+                  left: 2,
+                  transform: isDarkEffective ? "translateX(28px)" : "translateX(-1px)",
+                  transition: "transform 200ms ease",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                  fontSize: 16,
+                  lineHeight: 1,
+                }}
+              >
+                {isDarkEffective ? "🌙" : "🌞"}
+              </span>
             </button>
-          ))}
-        </div>
+          );
+        })()
       )}
-
-      {/* 隐藏的测量按钮，仅用于计算“🖥 跟随系统”标准宽度 */}
-      <button
-        ref={measureRef}
-        type="button"
-        aria-hidden
-        tabIndex={-1}
-        style={{
-          position: "absolute",
-          visibility: "hidden",
-          pointerEvents: "none",
-          border: "1px solid var(--border)",
-          borderRadius: 9999,
-          padding: "6px 10px",
-          background: "var(--background)",
-          color: "var(--foreground)",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 8,
-        }}
-      >
-        <span style={{
-          flex: 1,
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-        }}>🖥 跟随系统</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-          <path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
     </div>
   );
 }
