@@ -39,11 +39,15 @@ export default function RootLayout({
         suppressHydrationWarning
         style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
       >
+        {/* 固定在右上角的主题开关 */}
+        <div style={{ position: "fixed", top: 10, right: 12, zIndex: 60 }}>
+          <ThemeToggle />
+        </div>
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-K4ZX54PHWM" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+            function gtag(){dataLayer.push(arguments);} 
             gtag('js', new Date());
             gtag('config', 'G-K4ZX54PHWM');
           `}
@@ -56,13 +60,13 @@ export default function RootLayout({
           borderBottom: "1px solid var(--border)",
           zIndex: 50,
         }}>
-          <div className="site-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.8rem 0" }}>
+          <div className="site-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.8rem 0", paddingRight: "84px" }}>
             <a href="/" style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--foreground)" }}>每日资讯简报</a>
             <nav style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
               <a href="/" aria-label="首页">首页</a>
               <a href="/news" aria-label="新闻">新闻</a>
               <a href="/search" aria-label="搜索">搜索</a>
-              <ThemeToggle />
+              {/* ThemeToggle 移除，不跟随链接 */}
             </nav>
           </div>
         </header>
