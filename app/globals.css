@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  /* Light (day) theme v4: softer background, calmer accents */
-  --background: #e2e8f0; /* slate-200 */
-  --foreground: #0f172a; /* slate-900 */
-  --accent: #1e40af; /* blue-800 */
-  --muted: #64748b; /* slate-500 */
-  --border: rgba(0,0,0,0.14);
+  /* Light (day) theme: Google-inspired palette */
+  --background: #DADCE0;
+  --foreground: #222222;
+  --accent: #1A73E8;
+  --muted: #5F6368;
+  --border: rgba(34,34,34,0.15);
   --footer-height: 64px;
 }
 
@@ -30,11 +30,11 @@
 
 /* data-theme 强制覆盖，放在媒体查询后以保证优先级 */
 html[data-theme="light"] {
-  --background: #e2e8f0;
-  --foreground: #0f172a;
-  --accent: #1e40af;
-  --muted: #64748b;
-  --border: rgba(0,0,0,0.14);
+  --background: #DADCE0;
+  --foreground: #222222;
+  --accent: #1A73E8;
+  --muted: #5F6368;
+  --border: rgba(34,34,34,0.15);
 }
 html[data-theme="dark"] {
   --background: #1f2937;
@@ -161,7 +161,7 @@ a:hover {
 
 /* Card surface */
 .card {
-  background: color-mix(in oklab, var(--background) 92%, white);
+  background: color-mix(in oklab, var(--background) 84%, white);
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.06);
