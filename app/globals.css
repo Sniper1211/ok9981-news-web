@@ -185,3 +185,36 @@ a:hover {
 .card-cta [aria-hidden] {
   opacity: 0.85;
 }
+
+/* Smooth theme change */
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition: none !important;
+  }
+}
+
+/* 定向扫幕动画：主题切换的方向性揭示效果 */
+@keyframes themeSweepDown {
+  from { height: 100%; opacity: 0.18; }
+  to   { height: 0%;   opacity: 0; }
+}
+@keyframes themeSweepUp {
+  from { height: 100%; opacity: 0.18; }
+  to   { height: 0%;   opacity: 0; }
+}
+/* 推过去滑动遮罩关键帧：沿 Y 轴缓慢推进 */
+@keyframes themePushDown {
+  from { transform: translateY(0%); opacity: 0.12; }
+  to   { transform: translateY(100%); opacity: 0; }
+}
+@keyframes themePushUp {
+  from { transform: translateY(0%); opacity: 0.12; }
+  to   { transform: translateY(-100%); opacity: 0; }
+}
