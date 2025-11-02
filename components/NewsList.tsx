@@ -50,7 +50,7 @@ export default function NewsList({ items }: { items: NewsItem[] }) {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {pageItems.map((item) => (
           <article key={item.slug} className="card transition-shadow p-5 flex flex-col relative group">
-            <Link href={`/news/${item.slug}`} aria-label={`打开：${item.title}`} className="absolute inset-0 rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <Link href={`/news/${item.slug}/`} aria-label={`打开：${item.title}`} className="absolute inset-0 rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <h2 className="text-lg font-semibold">{item.title}</h2>
             <time className="block text-sm text-slate-500 mt-1">{new Date(item.date).toLocaleDateString("zh-CN")}</time>
             <p className="mt-2 line-clamp-3 text-sm">{item.summary}</p>

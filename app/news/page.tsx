@@ -27,7 +27,7 @@ export default function NewsListPage() {
           >
             {/* 覆盖整个卡片的点击区域，避免嵌套链接 */}
             <Link
-              href={`/news/${item.slug}`}
+              href={`/news/${item.slug}/`}
               aria-label={`打开：${item.title}`}
               className="absolute inset-0 rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-500"
             />

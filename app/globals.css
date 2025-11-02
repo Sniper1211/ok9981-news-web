@@ -173,6 +173,33 @@ a:hover {
   box-shadow: 0 10px 24px rgba(0,0,0,0.12);
 }
 
+/* Sidebar panels: clean, no hover lift */
+.sidebar-panel {
+  background: color-mix(in oklab, var(--background) 92%, white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.sidebar-panel:hover {
+  background: color-mix(in oklab, var(--background) 90%, white);
+}
+
+/* Sidebar ad slots */
+.ad-slot {
+  height: 80px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--background) 94%, white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #64748b; /* slate-500 */
+}
+.ad-slot--large {
+  height: 180px;
+}
+
 /* Card CTA text (阅读全文) softer accent across themes */
 .card-cta {
   color: color-mix(in oklab, var(--accent) 72%, var(--foreground));

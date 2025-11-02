@@ -22,7 +22,7 @@ export default function NewsArchiveIndex() {
                 {months.map((m) => {
                   const list = getNewsByYearMonth(year, m);
                   return (
-                    <Link key={m} href={`/news/archive/${year}/${String(m).padStart(2, "0")}`} className="card px-3 py-2">
+                    <Link key={m} href={`/news/archive/${year}/${String(m).padStart(2, "0")}/`} className="card px-3 py-2">
                       {year}-{String(m).padStart(2, "0")}（{list.length}）
                     </Link>
                   );
