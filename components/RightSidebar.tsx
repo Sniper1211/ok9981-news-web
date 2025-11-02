@@ -26,7 +26,7 @@ export default function RightSidebar({ currentSlug }: { currentSlug?: string }) 
       </section>
 
       <section className="sidebar-panel p-4">
-        <h2 className="text-base font-semibold">广告位</h2>
+        <h2 className="text-base font-semibold">一拍即合</h2>
         <div className="mt-3 grid gap-3">
           <div className="ad-slot">320×80 Banner</div>
           <div className="ad-slot ad-slot--large">320×180 广告位</div>
