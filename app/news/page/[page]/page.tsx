@@ -31,7 +31,7 @@ export default async function NewsListPaged({ params }: Props) {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <article key={item.slug} className="card transition-shadow p-5 flex flex-col relative group">
-            <Link href={`/news/${item.slug}`} aria-label={`打开：${item.title}`} className="absolute inset-0 rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <Link href={`/news/${item.slug}/`} aria-label={`打开：${item.title}`} className="absolute inset-0 rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <h2 className="text-lg font-semibold">{item.title}</h2>
             <time className="block text-sm text-slate-500 mt-1">{new Date(item.date).toLocaleDateString("zh-CN")}</time>
             <p className="mt-2 line-clamp-3 text-sm">{item.summary}</p>
@@ -41,11 +41,11 @@ export default async function NewsListPaged({ params }: Props) {
       </div>
 
       <nav aria-label="分页" className="mt-8 flex items-center justify-center gap-3">
-        <Link href={current > 1 ? `/news/page/${current - 1}` : `/news`} className={`px-3 py-1 rounded ${current > 1 ? "" : "pointer-events-none opacity-50"}`}>上一页</Link>
+        <Link href={current > 1 ? `/news/page/${current - 1}/` : `/news/`} className={`px-3 py-1 rounded ${current > 1 ? "" : "pointer-events-none opacity-50"}`}>上一页</Link>
         {Array.from({ length: totalPages }, (_, i) => (
-          <Link key={i} href={i === 0 ? "/news" : `/news/page/${i + 1}`} className={`px-3 py-1 rounded ${i + 1 === current ? "bg-blue-600 text-white" : ""}`}>{i + 1}</Link>
+          <Link key={i} href={i === 0 ? "/news/" : `/news/page/${i + 1}/`} className={`px-3 py-1 rounded ${i + 1 === current ? "bg-blue-600 text-white" : ""}`}>{i + 1}</Link>
         ))}
-        <Link href={current < totalPages ? `/news/page/${current + 1}` : `/news/page/${current}`} className={`px-3 py-1 rounded ${current < totalPages ? "" : "pointer-events-none opacity-50"}`}>下一页</Link>
+        <Link href={current < totalPages ? `/news/page/${current + 1}/` : `/news/page/${current}/`} className={`px-3 py-1 rounded ${current < totalPages ? "" : "pointer-events-none opacity-50"}`}>下一页</Link>
       </nav>
 
       <div aria-hidden style={{ height: "calc(var(--footer-height) + 24px)" }} />

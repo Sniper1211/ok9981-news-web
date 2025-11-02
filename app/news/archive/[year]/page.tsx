@@ -25,7 +25,7 @@ export default async function NewsArchiveYear({ params }: Props) {
       <h1 className="text-3xl font-bold mb-6">{y} 年资讯归档</h1>
       <div className="flex flex-wrap gap-3">
         {months.map((m) => (
-          <Link key={m} href={`/news/archive/${y}/${String(m).padStart(2, "0")}`} className="card px-3 py-2">
+          <Link key={m} href={`/news/archive/${y}/${String(m).padStart(2, "0")}/`} className="card px-3 py-2">
             {y}-{String(m).padStart(2, "0")}（{getNewsByYearMonth(y, m).length}）
           </Link>
         ))}

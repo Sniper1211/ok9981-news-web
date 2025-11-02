@@ -64,7 +64,7 @@ export default function RootLayout({
             <a href="/" style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--foreground)" }}>每日资讯简报</a>
             <nav style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
               <a href="/" aria-label="首页">首页</a>
-              <a href="/news" aria-label="新闻">新闻</a>
+              <a href="/news/" aria-label="新闻">新闻</a>
               <a href="/search" aria-label="搜索">搜索</a>
               {/* ThemeToggle 移除，不跟随链接 */}
             </nav>

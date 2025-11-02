@@ -26,7 +26,7 @@ export default function Home() {
             className="card transition-shadow p-5 flex flex-col relative group"
           >
             <Link
-              href={`/news/${item.slug}`}
+              href={`/news/${item.slug}/`}
               aria-label={`打开：${item.title}`}
               className="absolute inset-0 rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
