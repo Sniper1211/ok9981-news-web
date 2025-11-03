@@ -1,0 +1,36 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "羊毛🐑",
+  description: "线上消费优惠信息汇总",
+  keywords: ["羊毛", "优惠", "折扣", "返利", "券"]
+};
+
+export default function DealsPage() {
+  return (
+    <main className="mx-auto max-w-5xl px-4 py-10">
+      <h1 className="text-3xl font-bold mb-4">羊毛🐑</h1>
+      <p className="text-slate-600 mb-8">收集各类线上消费优惠与折扣信息，后续将支持分类与搜索。</p>
+
+      {/* 预留展示区：后续可替换为真实数据 */}
+      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {[
+          { title: "信用卡支付满减", note: "银行活动汇总" },
+          { title: "外卖平台优惠", note: "周末加码券" },
+          { title: "电商平台津贴", note: "跨店满减" },
+          { title: "生活服务折扣", note: "洗车/电影/美团券" },
+          { title: "数码产品促销", note: "以旧换新/教育优惠" },
+          { title: "订阅服务返利", note: "年付更划算" },
+        ].map((d, i) => (
+          <article key={i} className="card p-5">
+            <h2 className="text-lg font-semibold">{d.title}</h2>
+            <p className="mt-2 text-sm text-slate-600">{d.note}</p>
+            <div className="mt-4"><span className="card-cta inline-flex items-center gap-1">查看详情 <span aria-hidden>→</span></span></div>
+          </article>
+        ))}
+      </section>
+
+      <div aria-hidden style={{ height: "calc(var(--footer-height) + 24px)" }} />
+    </main>
+  );
+}

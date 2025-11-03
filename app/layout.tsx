@@ -66,6 +66,7 @@ export default function RootLayout({
               <a href="/" aria-label="首页">首页</a>
               <a href="/news/" aria-label="新闻">新闻</a>
               <a href="/search" aria-label="搜索">搜索</a>
+              <a href="/deals/" aria-label="羊毛">羊毛🐑</a>
               {/* ThemeToggle 移除，不跟随链接 */}
             </nav>
           </div>
