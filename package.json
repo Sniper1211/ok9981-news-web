@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "import:hugo": "node scripts/import-hugo.js"
+    "import:hugo": "node scripts/import-hugo.js",
+    "lint:news": "node scripts/check-news-md.mjs",
+    "fix:news": "node scripts/check-news-md.mjs --fix"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
