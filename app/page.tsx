@@ -15,10 +15,15 @@ export const metadata = {
 };
 
 export default function Home() {
-  const news = getAllNews();
+  const news = getAllNews().slice(0, 12);
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6">每日资讯</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold">每日资讯</h1>
+        <Link href="/news/" className="text-blue-600 hover:underline text-sm font-medium">
+          查看全部资讯 &rarr;
+        </Link>
+      </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {news.map((item) => (
           <article
@@ -44,6 +49,11 @@ export default function Home() {
             </div>
           </article>
         ))}
+      </div>
+      <div className="mt-10 text-center">
+        <Link href="/news/" className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 transition-colors">
+          浏览更多历史资讯
+        </Link>
       </div>
     </main>
   );

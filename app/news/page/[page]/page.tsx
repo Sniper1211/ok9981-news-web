@@ -47,8 +47,6 @@ export default async function NewsListPaged({ params }: Props) {
         ))}
         <Link href={current < totalPages ? `/news/page/${current + 1}/` : `/news/page/${current}/`} className={`px-3 py-1 rounded ${current < totalPages ? "" : "pointer-events-none opacity-50"}`}>下一页</Link>
       </nav>
-
-      <div aria-hidden style={{ height: "calc(var(--footer-height) + 24px)" }} />
     </main>
   );
 }

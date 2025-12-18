@@ -29,8 +29,6 @@ export default function DealsPage() {
           </article>
         ))}
       </section>
-
-      <div aria-hidden style={{ height: "calc(var(--footer-height) + 24px)" }} />
     </main>
   );
 }
