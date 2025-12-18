@@ -29,34 +29,57 @@ function parseFrontMatter(file: string) {
   return matter(file);
 }
 
-export function getNewsSlugs(): string[] {
-  if (!fs.existsSync(CONTENT_DIR)) return [];
-  return fs
-    .readdirSync(CONTENT_DIR)
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => f.replace(/\.md$/, ""));
+// 递归遍历目录查找所有 .md 文件
+function listMarkdownFiles(dir: string): string[] {
+  let results: string[] = [];
+  if (!fs.existsSync(dir)) return results;
+  const list = fs.readdirSync(dir);
+  for (const file of list) {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(listMarkdownFiles(filePath));
+    } else if (file.endsWith(".md")) {
+      results.push(filePath);
+    }
+  }
+  return results;
 }
 
 export function getAllNews(): NewsItem[] {
-  const slugs = getNewsSlugs();
-  const items = slugs.map((slug) => {
-    const file = fs.readFileSync(path.join(CONTENT_DIR, `${slug}.md`), "utf8");
-    const { data, content } = parseFrontMatter(file);
+  const files = listMarkdownFiles(CONTENT_DIR);
+  const items = files.map((filePath) => {
+    const fileName = path.basename(filePath, ".md");
+    // slug 保持为文件名（不含路径），因此要求文件名全局唯一
+    const slug = fileName;
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const { data, content } = parseFrontMatter(fileContent);
     const title = String(data.title ?? slug);
     const date = String(data.date ?? new Date().toISOString());
     const summary = String(
       data.summary ?? content.split("\n").find((l) => l.trim().length > 0) ?? ""
     );
-    return { slug, title, date, summary };
+    return { slug, title, date, summary, _fullPath: filePath }; // _fullPath internal use
   });
   return items.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 }
 
+// 辅助函数：根据 slug 查找文件路径
+function findFileBySlug(slug: string): string | null {
+  const files = listMarkdownFiles(CONTENT_DIR);
+  const found = files.find((f) => path.basename(f, ".md") === slug);
+  return found || null;
+}
+
+export function getNewsSlugs(): string[] {
+  return getAllNews().map((n) => n.slug);
+}
+
 export function getNewsBySlug(slug: string): NewsItem | null {
-  const filePath = path.join(CONTENT_DIR, `${slug}.md`);
-  if (!fs.existsSync(filePath)) return null;
+  const filePath = findFileBySlug(slug);
+  if (!filePath) return null;
   const { data, content } = parseFrontMatter(fs.readFileSync(filePath, "utf8"));
   return {
     slug,
@@ -69,8 +92,8 @@ export function getNewsBySlug(slug: string): NewsItem | null {
 }
 
 export async function getNewsHtmlBySlug(slug: string): Promise<string | null> {
-  const filePath = path.join(CONTENT_DIR, `${slug}.md`);
-  if (!fs.existsSync(filePath)) return null;
+  const filePath = findFileBySlug(slug);
+  if (!filePath) return null;
   const { content } = parseFrontMatter(fs.readFileSync(filePath, "utf8"));
   const rendered = await remark().use(breaks as any).use(html).process(content);
   return String(rendered.value);
@@ -131,10 +154,12 @@ export function getYearMonthFromItem(n: NewsItem): { year: number; month: number
 export type NewsWithContent = NewsItem & { content: string };
 
 export function getAllNewsWithContent(): NewsWithContent[] {
-  const slugs = getNewsSlugs();
-  const items = slugs.map((slug) => {
-    const file = fs.readFileSync(path.join(CONTENT_DIR, `${slug}.md`), "utf8");
-    const { data, content } = parseFrontMatter(file);
+  const files = listMarkdownFiles(CONTENT_DIR);
+  const items = files.map((filePath) => {
+    const fileName = path.basename(filePath, ".md");
+    const slug = fileName;
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const { data, content } = parseFrontMatter(fileContent);
     const title = String(data.title ?? slug);
     const date = String(data.date ?? new Date().toISOString());
     const summary = String(

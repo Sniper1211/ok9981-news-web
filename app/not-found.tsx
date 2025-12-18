@@ -12,7 +12,6 @@ export default function NotFound() {
           <Link href="/" className="px-4 py-2 rounded bg-blue-600 text-white">返回首页</Link>
           <Link href="/news/" className="px-4 py-2 rounded border border-slate-300">查看新闻列表</Link>
         </div>
-        <div aria-hidden style={{ height: "calc(var(--footer-height) + 24px)" }} />
       </section>
     </main>
   );

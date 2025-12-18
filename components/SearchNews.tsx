@@ -70,8 +70,6 @@ export default function SearchNews({ items }: { items: NewsWithContent[] }) {
         ))}
         <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} className={`px-3 py-1 rounded ${current < totalPages ? "" : "pointer-events-none opacity-50"}`}>下一页</button>
       </nav>
-
-      <div aria-hidden style={{ height: "calc(var(--footer-height) + 24px)" }} />
     </div>
   );
 }
