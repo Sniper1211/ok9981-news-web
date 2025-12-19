@@ -24,6 +24,10 @@ export const metadata: Metadata = {
     "新闻中心",
     "每日资讯",
   ],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.meirizixun.site"),
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({

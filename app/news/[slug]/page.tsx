@@ -14,16 +14,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const item = getNewsBySlug(slug);
   if (!item) return {};
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.meirizixun.site";
   return {
     title: item.title,
     description: item.summary,
     keywords: [item.title, "OK9981", "新闻", "资讯"],
+    alternates: {
+      canonical: `${site}/news/${item.slug}/`,
+    },
     openGraph: {
       title: item.title,
       description: item.summary,
       type: "article",
       publishedTime: item.date,
-      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/news/${item.slug}`,
+      url: `${site}/news/${item.slug}/`,
     },
   };
 }
