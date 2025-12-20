@@ -1,5 +1,7 @@
 import { getAllNews } from "@/lib/news";
 import Link from "next/link";
+import Image from "next/image";
+import alipayRedPacket from "@/assets/alipay-redpacket.jpg";
 
 export default function RightSidebar({ currentSlug }: { currentSlug?: string }) {
   const all = getAllNews();
