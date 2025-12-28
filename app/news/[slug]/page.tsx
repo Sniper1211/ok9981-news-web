@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: item.title,
     description: item.summary,
-    keywords: [item.title, "OK9981", "新闻", "资讯"],
+    keywords: [item.title, "新闻", "资讯"],
     alternates: {
       canonical: `${site}/news/${item.slug}/`,
     },
