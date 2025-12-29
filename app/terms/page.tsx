@@ -32,7 +32,7 @@ export default function TermsPage() {
         <h2>3. 版权与使用</h2>
         <p>
           站内原创内容的版权归本站或作者所有；转载或引用请注明来源，且不得用于违法用途。若您认为内容侵权，请通过
-          <a href="mailto:contact@meirizixun.site">contact@meirizixun.site</a> 与我们联系，我们将及时处理。
+          <a href="mailto:busivaa@gmail.com">busivaa@gmail.com</a> 与我们联系，我们将及时处理。
         </p>
 
         <h2>4. 第三方链接与广告</h2>
@@ -53,4 +53,3 @@ export default function TermsPage() {
     </main>
   );
 }
-

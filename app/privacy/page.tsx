@@ -65,7 +65,7 @@ export default function PrivacyPolicyPage() {
         <h2>6. 您的权利</h2>
         <p>
           如果您对隐私有任何疑问、希望访问/更正/删除您的信息或撤回授权，请通过
-          <a href="mailto:contact@meirizixun.site">contact@meirizixun.site</a> 与我们联系。
+          <a href="mailto:busivaa@gmail.com">busivaa@gmail.com</a> 与我们联系。
         </p>
 
         <h2>7. 政策更新</h2>
@@ -76,4 +76,3 @@ export default function PrivacyPolicyPage() {
     </main>
   );
 }
-
