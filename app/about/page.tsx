@@ -34,10 +34,9 @@ export default function AboutPage() {
         <h2>联系我们</h2>
         <p>
           意见、建议或合作，请发送邮件至：
-          <a href="mailto:contact@meirizixun.site">contact@meirizixun.site</a>
+          <a href="mailto:busivaa@gmail.com">busivaa@gmail.com</a>
         </p>
       </article>
     </main>
   );
 }
-

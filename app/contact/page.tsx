@@ -21,7 +21,7 @@ export default function ContactPage() {
         <h2>电子邮箱</h2>
         <p>
           请发送邮件至：
-          <a href="mailto:contact@meirizixun.site">contact@meirizixun.site</a>
+          <a href="mailto:busivaa@gmail.com">busivaa@gmail.com</a>
         </p>
         <p>邮件主题建议包含：问题类别 + 简要说明（例如：纠错反馈 - 某条资讯日期有误）。</p>
 
@@ -36,4 +36,3 @@ export default function ContactPage() {
     </main>
   );
 }
-
