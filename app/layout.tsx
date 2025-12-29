@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "每日资讯简报",
-  description: "每日资讯简报 - 每日最新新闻与羊毛资讯",
+  description: "每日资讯简报 - 每日最新新闻",
   keywords: [
     "OK9981",
     "新闻",
@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  viewport: { width: "device-width", initialScale: 1 },
 };
 
 export default function RootLayout({
@@ -36,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh-CN">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
@@ -59,6 +60,8 @@ export default function RootLayout({
               <a href="/news/" aria-label="新闻">新闻</a>
               <a href="/search" aria-label="搜索">搜索</a>
               <a href="/deals/" aria-label="羊毛">羊毛🐑</a>
+              <a href="/about/" aria-label="关于我们">关于</a>
+              <a href="/contact/" aria-label="联系我们">联系</a>
               <ThemeToggle />
             </nav>
           </div>
@@ -78,7 +81,12 @@ export default function RootLayout({
         <footer id="site-footer" style={{ marginTop: "auto", borderTop: "1px solid var(--border)", background: "var(--background)" }}>
           <div className="site-container" style={{ padding: "1.2rem 0", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.9rem", color: "var(--muted)" }}>
             <span>© {new Date().getFullYear()} OK9981</span>
-            <span>由 Next.js 与 Vercel 驱动</span>
+            <nav aria-label="站点信息与合规" style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+              <a href="/about/">关于</a>
+              <a href="/contact/">联系</a>
+              <a href="/privacy/">隐私政策</a>
+              <a href="/terms/">使用条款</a>
+            </nav>
           </div>
         </footer>
       </body>
