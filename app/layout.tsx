@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
+import CurrentYear from "@/components/CurrentYear";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -80,7 +81,7 @@ export default function RootLayout({
         {children}
         <footer id="site-footer" style={{ marginTop: "auto", borderTop: "1px solid var(--border)", background: "var(--background)" }}>
           <div className="site-container" style={{ padding: "1.2rem 0", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.9rem", color: "var(--muted)" }}>
-            <span>© {new Date().getFullYear()} OK9981</span>
+            <span>© <CurrentYear /> OK9981</span>
             <nav aria-label="站点信息与合规" style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
               <a href="/about/">关于</a>
               <a href="/contact/">联系</a>
