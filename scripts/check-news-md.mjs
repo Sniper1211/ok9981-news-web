@@ -53,8 +53,44 @@ function normalizeBody(body, { strict = false } = {}) {
       .filter((l) => l.trim() !== '')
       .join('\n');
   } else {
-    // Collapse 2+ blank lines to a single blank line
-    processed = processed.replace(/(\r?\n)[ \t]*(\r?\n)+/g, '$1');
+    // 1. Collapse 2+ blank lines to a single blank line
+    processed = processed.replace(/(\r?\n)[ \t]*(\r?\n)+/g, '$1\n');
+    
+    // 2. Remove blank lines between list items (Specific fix for the user's issue)
+    // Matches: (Line ending with digit+punctuation) + (one or more newlines) + (Line starting with digit+punctuation)
+    // Note: JS regex support for lookbehind is good in Node.
+    // Strategy: Split by newline, iterate and reconstruct.
+    
+    const lines = processed.split(/\r?\n/);
+    const resultLines = [];
+    const listItemRegex = /^\s*\d+[、\.]/;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const prevLine = resultLines.length > 0 ? resultLines[resultLines.length - 1] : null;
+      
+      // If current line is empty
+      if (line.trim() === '') {
+        // Look ahead for next non-empty line
+        let nextLine = null;
+        for (let j = i + 1; j < lines.length; j++) {
+          if (lines[j].trim() !== '') {
+            nextLine = lines[j];
+            break;
+          }
+        }
+
+        // If both prev and next are list items, skip this empty line
+        if (prevLine && listItemRegex.test(prevLine) && nextLine && listItemRegex.test(nextLine)) {
+           continue; 
+        }
+      }
+      resultLines.push(line);
+    }
+    processed = resultLines.join('\n');
+    
+    // Final cleanup: collapse multiple blank lines again just in case
+    processed = processed.replace(/(\r?\n)[ \t]*(\r?\n)+/g, '$1\n');
   }
 
   // Ensure single trailing newline at EOF
