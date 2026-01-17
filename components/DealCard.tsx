@@ -17,8 +17,8 @@ export default function DealCard({ deal }: DealCardProps) {
   const [showToast, setShowToast] = useState(false);
   const [isFading, setIsFading] = useState(false);
   const [toastPos, setToastPos] = useState({ x: 0, y: 0 });
-  const timerRef = useRef<NodeJS.Timeout>(null);
-  const fadeTimerRef = useRef<NodeJS.Timeout>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const fadeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const clearTimers = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -27,44 +27,35 @@ export default function DealCard({ deal }: DealCardProps) {
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
-
-    // 复制链接
     try {
       await navigator.clipboard.writeText(deal.link);
     } catch (err) {
       console.error("Failed to copy:", err);
     }
 
-    // 设置气泡位置（跟随鼠标点击位置）
     setToastPos({ x: e.clientX, y: e.clientY });
-    
-    // 重置状态
     clearTimers();
     setShowToast(true);
     setIsFading(false);
 
-    // 4.5秒后开始淡出
     fadeTimerRef.current = setTimeout(() => {
       setIsFading(true);
-    }, 4500);
+    }, 2500);
 
-    // 5秒后完全消失
     timerRef.current = setTimeout(() => {
       setShowToast(false);
-    }, 5000);
+    }, 3000);
   };
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     clearTimers();
     setIsFading(true);
-    // 等待淡出动画结束（300ms）后移除 DOM
     setTimeout(() => {
       setShowToast(false);
     }, 300);
   };
 
-  // 组件卸载时清理定时器
   useEffect(() => {
     return () => clearTimers();
   }, []);
@@ -73,57 +64,52 @@ export default function DealCard({ deal }: DealCardProps) {
     <>
       <div
         onClick={handleClick}
-        className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 cursor-pointer relative"
+        className="premium-card group bg-card cursor-pointer flex flex-col h-full active:scale-95 transition-all"
       >
-        <div className="aspect-[3/4] relative bg-slate-50">
+        <div className="aspect-[4/5] relative bg-muted/10 overflow-hidden">
           <Image
             src={deal.image}
             alt={deal.title}
-            width={300}
-            height={400}
-            className="object-cover w-full h-full"
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
             unoptimized
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+            <span className="text-white text-xs font-bold bg-accent px-2 py-1 rounded">点击复制链接</span>
+          </div>
         </div>
-        <div className="p-4 border-t border-slate-100">
-          <h3 className="font-semibold text-lg group-hover:text-blue-600 transition-colors">
+        <div className="p-5 flex flex-col flex-grow">
+          <h3 className="font-bold text-lg mb-2 group-hover:text-accent transition-colors line-clamp-1">
             {deal.title}
           </h3>
-          <p className="text-slate-500 text-sm mt-1">{deal.desc}</p>
+          <p className="text-muted text-sm line-clamp-2 leading-relaxed">
+            {deal.desc}
+          </p>
         </div>
       </div>
 
-      {/* Portal 或 Fixed 定位的 Toast */}
       {showToast && (
         <div
-          className={`fixed z-50 px-4 py-3 bg-slate-800 text-white text-sm rounded-lg shadow-lg pointer-events-auto transition-opacity duration-300 ${
-            isFading ? "opacity-0" : "opacity-100"
-          }`}
+          className={`fixed z-[100] px-4 py-3 bg-foreground text-background text-sm rounded-2xl shadow-2xl pointer-events-auto transition-all duration-300 border border-white/10 ${isFading ? "opacity-0 scale-95" : "opacity-100 scale-100"
+            }`}
           style={{
             left: toastPos.x,
             top: toastPos.y,
-            transform: "translate(-50%, -100%) translateY(-12px)", // 稍微向上偏移一点，避免遮挡鼠标
+            transform: "translate(-50%, -100%) translateY(-20px)",
           }}
         >
-          <div className="flex items-start gap-3">
-            <div>
-              <p className="font-bold mb-1">链接已复制！</p>
-              <p className="text-xs text-slate-300">请前往微信粘贴并打开</p>
-            </div>
-            <button 
-              onClick={handleClose}
-              className="text-slate-400 hover:text-white transition-colors p-0.5"
-              aria-label="关闭"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+          <div className="flex items-center gap-3 whitespace-nowrap">
+            <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-            </button>
+            </div>
+            <div>
+              <p className="font-bold">链接已复制</p>
+              <p className="text-[10px] opacity-70 italic font-mono">粘贴到微信中打开</p>
+            </div>
           </div>
-          
-          {/* 小箭头 */}
-          <div className="absolute left-1/2 bottom-[-6px] w-3 h-3 bg-slate-800 transform -translate-x-1/2 rotate-45"></div>
+          <div className="absolute left-1/2 bottom-[-6px] w-3 h-3 bg-foreground transform -translate-x-1/2 rotate-45 border-r border-b border-white/10"></div>
         </div>
       )}
     </>
