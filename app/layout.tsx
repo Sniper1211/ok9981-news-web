@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
 import CurrentYear from "@/components/CurrentYear";
 import Script from "next/script";
+import NavLinks from "@/components/NavLinks";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,43 +34,71 @@ export const metadata: Metadata = {
   viewport: { width: "device-width", initialScale: 1 },
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning
-        style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
-      >
-        <header style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          backdropFilter: "saturate(180%) blur(6px)",
-          background: "color-mix(in oklab, var(--background) 85%, transparent)",
-          borderBottom: "1px solid var(--border)",
-          zIndex: 50,
-        }}>
-          <div className="site-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.8rem 0" }}>
-            <a href="/" style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--foreground)" }}>每日资讯简报</a>
-            <nav style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-              <a href="/" aria-label="首页">首页</a>
-              <a href="/news/" aria-label="新闻">新闻</a>
-              <a href="/search" aria-label="搜索">搜索</a>
-              <a href="/deals/" aria-label="羊毛">羊毛🐑</a>
-              <a href="/about/" aria-label="关于我们">关于</a>
-              <a href="/contact/" aria-label="联系我们">联系</a>
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <header className="glass-header">
+          <div className="site-container py-4 flex items-center justify-between">
+            <Link href="/" className="text-xl font-bold tracking-tight hover:scale-105 active:scale-95 transition-transform">
+              每日资讯简报
+            </Link>
+            <div className="hidden md:flex items-center gap-8">
+              <NavLinks />
               <ThemeToggle />
-            </nav>
+            </div>
+            {/* Mobile Toggle */}
+            <div className="md:hidden flex items-center gap-4">
+              <ThemeToggle />
+            </div>
           </div>
         </header>
-        {/* 为固定 header 留出空间 */}
-        <div style={{ height: "var(--header-height)", minHeight: "64px", flexShrink: 0 }} aria-hidden="true" />
+
+        <main className="flex-grow">
+          {children}
+        </main>
+
+        <footer className="mt-20 border-t border-border bg-card/30">
+          <div className="site-container py-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold">每日资讯简报</h3>
+                <p className="text-sm text-muted leading-relaxed">
+                  汇聚全球资讯，提供每日最有价值的新闻内容。
+                </p>
+              </div>
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold uppercase tracking-wider text-muted">快速链接</h4>
+                <nav className="flex flex-col gap-2">
+                  <Link href="/news/" className="text-sm hover:text-accent transition-colors">新闻列表</Link>
+                  <Link href="/deals/" className="text-sm hover:text-accent transition-colors">精选优惠</Link>
+                  <Link href="/search" className="text-sm hover:text-accent transition-colors">全局搜索</Link>
+                </nav>
+              </div>
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold uppercase tracking-wider text-muted">法律与合规</h4>
+                <nav className="flex flex-col gap-2">
+                  <Link href="/privacy/" className="text-sm hover:text-accent transition-colors">隐私政策</Link>
+                  <Link href="/terms/" className="text-sm hover:text-accent transition-colors">使用条款</Link>
+                  <Link href="/contact/" className="text-sm hover:text-accent transition-colors">联系我们</Link>
+                </nav>
+              </div>
+            </div>
+            <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted">
+              <span>© <CurrentYear /> OK9981. All rights reserved.</span>
+              <div className="flex gap-6">
+                <Link href="/about/" className="hover:text-foreground">关于我们</Link>
+              </div>
+            </div>
+          </div>
+        </footer>
+
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-K4ZX54PHWM" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">
           {`
@@ -78,18 +108,6 @@ export default function RootLayout({
             gtag('config', 'G-K4ZX54PHWM');
           `}
         </Script>
-        {children}
-        <footer id="site-footer" style={{ marginTop: "auto", borderTop: "1px solid var(--border)", background: "var(--background)" }}>
-          <div className="site-container" style={{ padding: "1.2rem 0", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.9rem", color: "var(--muted)" }}>
-            <span>© <CurrentYear /> OK9981</span>
-            <nav aria-label="站点信息与合规" style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-              <a href="/about/">关于</a>
-              <a href="/contact/">联系</a>
-              <a href="/privacy/">隐私政策</a>
-              <a href="/terms/">使用条款</a>
-            </nav>
-          </div>
-        </footer>
       </body>
     </html>
   );
