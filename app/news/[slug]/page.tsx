@@ -58,7 +58,10 @@ export default async function NewsDetailPage({ params }: Props) {
             </time>
             <h1 className="text-3xl font-bold mt-2">{item.title}</h1>
           </header>
-          <article className="prose mt-6" dangerouslySetInnerHTML={{ __html: html ?? "" }} />
+          <article
+            className="prose prose-news mt-6"
+            dangerouslySetInnerHTML={{ __html: html ?? "" }}
+          />
 
           <nav aria-label="文章导航" className="mt-10">
             <div className="flex items-center justify-between gap-4">
