@@ -99,6 +99,12 @@ export async function getNewsHtmlBySlug(slug: string): Promise<string | null> {
   return String(rendered.value);
 }
 
+export function getNewsContentBySlug(slug: string): string | null {
+  const filePath = findFileBySlug(slug);
+  if (!filePath) return null;
+  const { content } = parseFrontMatter(fs.readFileSync(filePath, "utf8"));
+  return content;
+}
 export function getSiblingNews(slug: string): { prev: NewsItem | null; next: NewsItem | null } {
   const items = getAllNews();
   const index = items.findIndex((i) => i.slug === slug);

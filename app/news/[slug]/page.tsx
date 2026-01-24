@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllNews, getNewsBySlug, getNewsHtmlBySlug, getSiblingNews } from "@/lib/news";
+import { getAllNews, getNewsBySlug, getSiblingNews, getNewsContentBySlug } from "@/lib/news";
 import RightSidebar from "@/components/RightSidebar";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -36,11 +36,29 @@ export default async function NewsDetailPage({ params }: Props) {
   const { slug } = await params;
   const item = getNewsBySlug(slug);
   if (!item) return notFound();
-  const html = await getNewsHtmlBySlug(slug);
+  const raw = getNewsContentBySlug(slug) ?? "";
   const { prev, next } = getSiblingNews(slug);
   const d = new Date(item.date);
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, "0");
+  const lines = raw.split("\n").map((l) => l.trim()).filter((l) => l.length > 0);
+  const items = lines;
+  const first = items[0] ?? "";
+  const rest = items.slice(1);
+  const normalize = (line: string) =>
+    line.replace(/^\d+\s*[、.．]\s*/, "").replace(/[；;]\s*$/, "");
+  const splitForInlineButton = (line: string) => {
+    const m = line.match(/([；;，,。.!？?、：:]+)\s*$/);
+    const punct = m ? m[1] : "";
+    const core = m ? line.slice(0, line.length - m[0].length) : line;
+    const hanIdx: number[] = [];
+    for (let i = 0; i < core.length; i++) {
+      const ch = core[i];
+      if (/[\u4e00-\u9fff]/.test(ch)) hanIdx.push(i);
+    }
+    const splitPos = hanIdx.length >= 2 ? hanIdx[hanIdx.length - 2] : Math.max(0, core.length - 2);
+    return { prefix: core.slice(0, splitPos), tail: core.slice(splitPos), punct };
+  };
 
   return (
     <main className="site-container py-10">
@@ -58,10 +76,47 @@ export default async function NewsDetailPage({ params }: Props) {
             </time>
             <h1 className="text-3xl font-bold mt-2">{item.title}</h1>
           </header>
-          <article
-            className="prose prose-news mt-6"
-            dangerouslySetInnerHTML={{ __html: html ?? "" }}
-          />
+          <article className="prose prose-news mt-6">
+            {first && (() => {
+              const { prefix, tail, punct } = splitForInlineButton(first);
+              return (
+                <div className="not-prose rounded-md p-4 bg-accent/10 border border-accent/20 text-accent font-bold">
+                  <span className="inline">{prefix}{tail}{punct}</span>
+                </div>
+              );
+            })()}
+            <ol className="not-prose space-y-1 mt-2">
+              {rest.map((line, idx) => {
+                const hue = Math.round((idx / Math.max(1, rest.length)) * 360);
+                const bg = `linear-gradient(90deg, hsl(${hue} 45% 96%), hsl(${(hue + 25) % 360} 45% 95%))`;
+                const { prefix, tail, punct } = splitForInlineButton(line);
+                return (
+                  <li
+                    key={idx}
+                    className="rounded-md p-1 leading-snug"
+                    style={{ background: bg }}
+                  >
+                    <span className="inline">{prefix}</span>
+                    <span className="inline whitespace-nowrap align-middle">
+                      {tail}
+                      <Link
+                        href={`https://www.bing.com/search?q=${encodeURIComponent(normalize(line))}`}
+                        className="ml-1 inline-flex align-middle items-center gap-1 rounded-md px-2 py-[2px] text-[0.9em] hover:bg-accent/10 hover:text-accent transition-colors group"
+                        target="_blank"
+                        rel="nofollow noopener noreferrer"
+                        aria-label={`搜索：${normalize(line)}`}
+                      >
+                        <svg viewBox="0 0 24 24" className="w-[1em] h-[1em] text-muted group-hover:text-accent" aria-hidden>
+                          <path fill="currentColor" d="M21 20l-5.6-5.6a7 7 0 10-1.4 1.4L20 21zM10 15a5 5 0 110-10 5 5 0 010 10z"/>
+                        </svg>
+                      </Link>
+                    </span>
+                    {punct && <span className="inline">{punct}</span>}
+                  </li>
+                );
+              })}
+            </ol>
+          </article>
 
           <nav aria-label="文章导航" className="mt-10">
             <div className="flex items-center justify-between gap-4">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getAllNewsWithContent } from "@/lib/news";
 import SearchNews from "@/components/SearchNews";
 
