@@ -88,13 +88,12 @@ export default async function NewsDetailPage({ params }: Props) {
             <ol className="not-prose space-y-1 mt-2">
               {rest.map((line, idx) => {
                 const hue = Math.round((idx / Math.max(1, rest.length)) * 360);
-                const bg = `linear-gradient(90deg, hsl(${hue} 45% 96%), hsl(${(hue + 25) % 360} 45% 95%))`;
                 const { prefix, tail, punct } = splitForInlineButton(line);
                 return (
                   <li
                     key={idx}
-                    className="rounded-md p-1 leading-snug"
-                    style={{ background: bg }}
+                    className="news-item-gradient rounded-md p-1 leading-snug"
+                    style={{ ["--news-h" as any]: `${hue}` }}
                   >
                     <span className="inline">{prefix}</span>
                     <span className="inline whitespace-nowrap align-middle">

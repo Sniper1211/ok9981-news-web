@@ -131,6 +131,24 @@
   }
 }
 
+/* News item rainbow background */
+.news-item-gradient {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--news-h) var(--news-s) var(--news-l1)),
+    hsl(calc(var(--news-h) + 25) var(--news-s) var(--news-l2))
+  );
+}
+:root .news-item-gradient {
+  --news-s: 45%;
+  --news-l1: 96%;
+  --news-l2: 95%;
+}
+[data-theme="dark"] .news-item-gradient {
+  --news-s: 30%;
+  --news-l1: 20%;
+  --news-l2: 18%;
+}
 /* Theme Switching Smoothness */
 html.theme-transition * {
   transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out !important;
