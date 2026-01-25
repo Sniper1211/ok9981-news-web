@@ -96,7 +96,7 @@ export default async function NewsDetailPage({ params }: Props) {
                     style={{ ["--news-h" as any]: `${hue}` }}
                   >
                     <span className="inline">{prefix}</span>
-                    <span className="inline whitespace-nowrap align-middle">
+                    <span className="inline whitespace-nowrap">
                       {tail}
                       <Link
                         href={`https://www.bing.com/search?q=${encodeURIComponent(normalize(line))}`}
