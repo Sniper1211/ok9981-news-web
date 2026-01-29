@@ -98,6 +98,7 @@ export default async function NewsDetailPage({ params }: Props) {
                     <span className="inline">{prefix}</span>
                     <span className="inline whitespace-nowrap">
                       {tail}
+                      {punct && <span className="inline">{punct}</span>}
                       <Link
                         href={`https://www.bing.com/search?q=${encodeURIComponent(normalize(line))}`}
                         className="ml-1 inline-flex align-middle items-center gap-1 rounded-md px-2 py-[2px] text-[0.9em] hover:bg-accent/10 hover:text-accent transition-colors group"
@@ -110,7 +111,6 @@ export default async function NewsDetailPage({ params }: Props) {
                         </svg>
                       </Link>
                     </span>
-                    {punct && <span className="inline">{punct}</span>}
                   </li>
                 );
               })}
